@@ -1,12 +1,7 @@
 name: Terraform Service Principal with Federated Credentials
 
 on:
-  push:
-    paths:
-      - 'module/**'
-  pull_request:
-    paths:
-      - 'module/**'
+  workflow_dispatch:
 
 env:
   ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
