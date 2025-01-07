@@ -43,6 +43,6 @@ jobs:
 
       # Terraform Apply
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' # Apply only on the main branch
+        if: github.ref == 'refs/heads/master' # Apply only on the main branch
         working-directory: ./module
         run: terraform apply -auto-approve tfplan
