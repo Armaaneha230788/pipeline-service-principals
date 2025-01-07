@@ -10,7 +10,7 @@ resource "azuread_application" "pipeline_app" {
 
 resource "azuread_service_principal" "pipeline_spn" {
     for_each = var.pipeline_service_principles
-    client_id = azuread_application.pipeline_app[eash.value].client_id
+    client_id = azuread_application.pipeline_app[each.value].client_id
     owners = [data.azuread_client_config.current.object_id]
   
 }
