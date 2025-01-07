@@ -1,3 +1,4 @@
+# variable set for Fed creds and SP
 variable "pipeline_service_principles" {
   type = set(string)
   description = "list of service principles to be created for azure app repos workflows"
@@ -13,6 +14,6 @@ variable "federated_id_credentails" {
       issuer = optional(string, "https://token.actions.githubuserscontent.com")
       subject = string
     }))
-  description = "Mapping of service plrinciple to their federatd credentiails for azure app workflows."
+  description = "Mapping of service plrinciples to their federatd credentiails for azure app workflows."
   default = []
 }

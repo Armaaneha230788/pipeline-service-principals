@@ -1,3 +1,4 @@
+# Create Service prinicple with Fed credentails
 data "azuread_client_config" "current" {}
 
 resource "azuread_application" "pipeline_app" {
@@ -25,3 +26,4 @@ resource "azuread_application_federated_identity_credential" "pipeline_fed_id_cr
     issuer = each.value.issuer
     subject = each.value.subject
 }
+
