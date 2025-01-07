@@ -1,0 +1,49 @@
+name: Dispatch Terraform Workflow
+
+on:
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      TF_VAR_client_id: ${{ secrets.AZURE_CLIENT_ID }} # Optional, replace with relevant variables
+      TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+      TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    steps:
+    # Step 1: Checkout the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: master # Ensure you're on the master branch
+
+    # Step 2: Set up Azure CLI
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # Step 3: Set up Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.6 # Replace with the desired version
+        cli_config_credentials_token: ${{ secrets.TERRAFORM_CLOUD_TOKEN }}
+
+    # Step 4: Terraform Init
+    - name: Terraform Init
+      run: terraform init
+      working-directory: module
+
+    # Step 5: Terraform Plan
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+      working-directory: module
+
+    # Step 6: Terraform Apply (Manual Approval Required)
+    - name: Terraform Apply
+      if: ${{ github.event.inputs.auto_apply != 'true' }}
+      run: terraform apply -auto-approve tfplan
+      working-directory: module
