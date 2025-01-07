@@ -1,4 +1,4 @@
-# versions
+# version
 terraform {
   required_providers {
     azurerm = {

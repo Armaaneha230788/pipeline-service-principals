@@ -1,4 +1,4 @@
-# variable set for Fed creds and SP
+# variable set for Fed creds and service principle
 variable "pipeline_service_principles" {
   type = set(string)
   description = "list of service principles to be created for azure app repos workflows"
