@@ -18,6 +18,8 @@ jobs:
       # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          ref: master
 
       # Setup Terraform
       - name: Setup Terraform
