@@ -1,0 +1,53 @@
+name: Terraform Service Principal with Federated Credentials
+
+on:
+  push:
+    paths:
+      - 'module/**'
+  pull_request:
+    paths:
+      - 'module/**'
+
+env:
+  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+
+jobs:
+  terraform:
+    name: Run Terraform
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.6 # Specify your preferred Terraform version
+          cli_config_credentials_token: ${{ secrets.TERRAFORM_CLOUD_API_TOKEN }}
+
+      # Terraform Init
+      - name: Terraform Init
+        working-directory: ./module
+        run: terraform init
+
+      # Terraform Validate
+      - name: Terraform Validate
+        working-directory: ./module
+        run: terraform validate
+
+      # Terraform Plan
+      - name: Terraform Plan
+        working-directory: ./module
+        run: terraform plan -out=tfplan
+
+      # Terraform Apply
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' # Apply only on the main branch
+        working-directory: ./module
+        run: terraform apply -auto-approve tfplan
