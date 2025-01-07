@@ -1,4 +1,4 @@
-# Create Service prinicple with Fed credentails
+# Create Service prinicple with Federated credentails
 data "azuread_client_config" "current" {}
 
 resource "azuread_application" "pipeline_app" {
