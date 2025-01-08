@@ -3,7 +3,10 @@ name: Azure Login with Service Principal
 on:
   push:
     branches:
-      - master
+      - main
+
+permissions:
+  id-token: write  # Grant write permissions for id-token
 
 jobs:
   build-and-deploy:
