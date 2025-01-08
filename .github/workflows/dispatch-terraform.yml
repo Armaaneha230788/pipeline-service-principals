@@ -3,6 +3,9 @@ name: Dispatch Terraform Workflow
 on:
   workflow_dispatch: # Manual trigger
 
+permissions:
+  id-token: write  # Grant write permissions for id-token
+
 jobs:
   terraform:
     runs-on: ubuntu-latest
