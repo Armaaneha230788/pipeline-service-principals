@@ -14,6 +14,6 @@ variable "federated_id_credentails" {
       issuer = optional(string, "https://token.actions.githubuserscontent.com")
       subject = string
     }))
-  description = "Mapping of service plrinciples to their federated credentiails for azure app workflows."
+  description = "Mapping of service principles to their federated credentiails for azure app workflows."
   default = []
 }
